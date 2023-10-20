@@ -18,26 +18,58 @@ public class MovieManagerTest {
         movie4 = new Movie("Фильм 4");
         movie5 = new Movie("Фильм 5");
     }
-
     @Test
-    public void shouldAddMovies() {
-        manager.addMovie(movie1);
-        manager.addMovie(movie2);
-        manager.addMovie(movie3);
-        manager.addMovie(movie4);
-        manager.addMovie(movie5);
+    public void testFindLastWhenMoviesCountLessThanLimit() {
+        MovieManager movieManager = new MovieManager(5);
 
-        Movie[] expected = {movie5, movie4, movie3};
-        assertArrayEquals(expected, manager.findLast());
+        Movie movie1 = new Movie("Movie 1");
+        Movie movie2 = new Movie("Movie 2");
+        Movie movie3 = new Movie("Movie 3");
+
+        movieManager.addMovie(movie1);
+        movieManager.addMovie(movie2);
+        movieManager.addMovie(movie3);
+
+        Movie[] expected = {movie3, movie2, movie1};
+        Movie[] actual = movieManager.findLast();
+
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldReturnAllMovies() {
-        manager.addMovie(movie1);
-        manager.addMovie(movie2);
-        manager.addMovie(movie3);
+    public void testFindLastWhenMoviesCountEqualsLimit() {
+        MovieManager movieManager = new MovieManager(3);
 
-        Movie[] expected = {movie1, movie2, movie3};
-        assertArrayEquals(expected, manager.findAll());
+        Movie movie1 = new Movie("Movie 1");
+        Movie movie2 = new Movie("Movie 2");
+        Movie movie3 = new Movie("Movie 3");
+
+        movieManager.addMovie(movie1);
+        movieManager.addMovie(movie2);
+        movieManager.addMovie(movie3);
+
+        Movie[] expected = {movie3, movie2, movie1};
+        Movie[] actual = movieManager.findLast();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testFindLastWhenMoviesCountMoreThanLimit() {
+        MovieManager movieManager = new MovieManager(2);
+
+        Movie movie1 = new Movie("Movie 1");
+        Movie movie2 = new Movie("Movie 2");
+        Movie movie3 = new Movie("Movie 3");
+
+        movieManager.addMovie(movie1);
+        movieManager.addMovie(movie2);
+        movieManager.addMovie(movie3);
+
+        Movie[] expected = {movie3, movie2};
+        Movie[] actual = movieManager.findLast();
+
+        assertArrayEquals(expected, actual);
     }
 }
+
